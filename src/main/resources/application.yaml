@@ -3,7 +3,7 @@ spring:
     name: cityLists
 
 server:
-  port: 8080
+  port: 8000
 
 springdoc:
   swagger-ui:
