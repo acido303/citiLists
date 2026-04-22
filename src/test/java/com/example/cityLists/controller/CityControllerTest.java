@@ -81,6 +81,15 @@ class CityControllerTest {
     }
 
     @Test
+    void getCities_sizeExceedingMax_isCappedAt20() throws Exception {
+        when(dataService.getCitiesByCountry(1)).thenReturn(sixCities);
+
+        mockMvc.perform(get("/api/cities?countryId=1&size=9999"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size").value(20));
+    }
+
+    @Test
     void getCity_existingId_returnsCity() throws Exception {
         when(dataService.getCityById(1)).thenReturn(Optional.of(new City(1, 1, "New York")));
 

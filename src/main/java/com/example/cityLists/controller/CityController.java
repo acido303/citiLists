@@ -23,18 +23,21 @@ public class CityController {
         this.dataService = dataService;
     }
 
+    private static final int MAX_PAGE_SIZE = 20;
+
     @GetMapping
     @Operation(summary = "Get paginated cities by country")
     public PagedResponse<City> getCitiesByCountry(
             @Parameter(description = "Country ID") @RequestParam int countryId,
             @Parameter(description = "Page number (0-based)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Page size") @RequestParam(defaultValue = "5") int size) {
+            @Parameter(description = "Page size (max 20)") @RequestParam(defaultValue = "5") int size) {
 
+        int effectiveSize = Math.min(Math.max(size, 1), MAX_PAGE_SIZE);
         List<City> all = dataService.getCitiesByCountry(countryId);
-        int from = page * size;
-        int to = Math.min(from + size, all.size());
+        int from = page * effectiveSize;
+        int to = Math.min(from + effectiveSize, all.size());
         List<City> content = from >= all.size() ? List.of() : all.subList(from, to);
-        return new PagedResponse<>(content, page, size, all.size());
+        return new PagedResponse<>(content, page, effectiveSize, all.size());
     }
 
     @GetMapping("/{id}")
