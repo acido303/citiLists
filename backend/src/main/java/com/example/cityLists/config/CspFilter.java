@@ -18,7 +18,9 @@ public class CspFilter extends OncePerRequestFilter {
             "style-src 'self'; " +
             "img-src 'self'; " +
             "connect-src 'self'; " +
-            "frame-ancestors 'none'";
+            "frame-ancestors 'none'; " +
+            "base-uri 'self'; " +
+            "object-src 'none'";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

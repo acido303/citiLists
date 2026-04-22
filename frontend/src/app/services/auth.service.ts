@@ -11,7 +11,14 @@ export interface GoogleUser {
 declare const google: any;
 const TOKEN_KEY = 'gid_token';
 
-function decodeJwtPayload(token: string): Record<string, any> {
+interface JwtPayload {
+  name: string;
+  email: string;
+  picture: string;
+  exp: number;
+}
+
+function decodeJwtPayload(token: string): JwtPayload {
   const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
   const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
   return JSON.parse(new TextDecoder().decode(bytes));
