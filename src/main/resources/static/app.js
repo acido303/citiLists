@@ -13,9 +13,15 @@ async function get(url) {
 async function loadCountries() {
   countries = await get(`${BASE}/countries`);
   const list = document.getElementById('country-list');
-  list.innerHTML = countries
-    .map(c => `<div class="item" id="c-${c.id}" onclick="selectCountry(${c.id})">${c.name}</div>`)
-    .join('');
+  list.innerHTML = '';
+  countries.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.id = `c-${c.id}`;
+    el.textContent = c.name;
+    el.addEventListener('click', () => selectCountry(c.id));
+    list.appendChild(el);
+  });
 }
 
 async function selectCountry(id) {
@@ -32,27 +38,31 @@ async function loadCities() {
   totalPages = data.totalPages;
 
   const list = document.getElementById('city-list');
+  list.innerHTML = '';
 
   if (data.content.length === 0) {
-    list.innerHTML = '<p class="empty">No cities found.</p>';
-    document.getElementById('pagination').style.display = 'none';
+    const msg = document.createElement('p');
+    msg.className = 'empty';
+    msg.textContent = 'No cities found.';
+    list.appendChild(msg);
+    document.getElementById('pagination').classList.add('hidden');
     return;
   }
 
-  list.innerHTML = data.content
-    .map(c => `<div class="item" id="city-${c.id}" onclick="selectCity(${c.id})">${c.name}</div>`)
-    .join('');
+  data.content.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.id = `city-${c.id}`;
+    el.textContent = c.name;
+    el.addEventListener('click', () => selectCity(c.id));
+    list.appendChild(el);
+  });
 
   const pg = document.getElementById('pagination');
-  pg.style.display = 'flex';
+  pg.classList.remove('hidden');
   document.getElementById('page-info').textContent = `${currentPage + 1} / ${totalPages}`;
   document.getElementById('btn-prev').disabled = currentPage === 0;
   document.getElementById('btn-next').disabled = currentPage >= totalPages - 1;
-}
-
-async function changePage(delta) {
-  currentPage += delta;
-  await loadCities();
 }
 
 async function selectCity(id) {
@@ -62,13 +72,40 @@ async function selectCity(id) {
   const city = await get(`${BASE}/cities/${id}`);
   const country = countries.find(c => c.id === city.countryId);
 
-  document.getElementById('detail-content').innerHTML = `
-    <div class="detail">
-      <h2>${city.name}</h2>
-      <div class="country-name">${country ? country.name : ''}</div>
-      <div class="field"><span class="label">City ID</span><span>${city.id}</span></div>
-      <div class="field"><span class="label">Country ID</span><span>${city.countryId}</span></div>
-    </div>`;
+  const detail = document.getElementById('detail-content');
+  detail.innerHTML = '';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'detail';
+
+  const h2 = document.createElement('h2');
+  h2.textContent = city.name;
+
+  const sub = document.createElement('div');
+  sub.className = 'country-name';
+  sub.textContent = country ? country.name : '';
+
+  wrapper.appendChild(h2);
+  wrapper.appendChild(sub);
+  wrapper.appendChild(makeField('City ID', city.id));
+  wrapper.appendChild(makeField('Country ID', city.countryId));
+  detail.appendChild(wrapper);
 }
+
+function makeField(label, value) {
+  const row = document.createElement('div');
+  row.className = 'field';
+  const l = document.createElement('span');
+  l.className = 'label';
+  l.textContent = label;
+  const v = document.createElement('span');
+  v.textContent = value;
+  row.appendChild(l);
+  row.appendChild(v);
+  return row;
+}
+
+document.getElementById('btn-prev').addEventListener('click', () => { currentPage--; loadCities(); });
+document.getElementById('btn-next').addEventListener('click', () => { currentPage++; loadCities(); });
 
 loadCountries();
