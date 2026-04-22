@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CitiLists</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>CitiLists</header>
+
+<div class="layout">
+
+  <div class="panel" id="panel-countries">
+    <div class="panel-title">Countries</div>
+    <div class="scroll" id="country-list"></div>
+  </div>
+
+  <div class="panel" id="panel-cities">
+    <div class="panel-title">Cities</div>
+    <div class="scroll" id="city-list"></div>
+    <div class="pagination" id="pagination" style="display:none">
+      <button id="btn-prev" onclick="changePage(-1)">&#8592; Prev</button>
+      <span id="page-info"></span>
+      <button id="btn-next" onclick="changePage(1)">Next &#8594;</button>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-detail">
+    <div class="panel-title">Details</div>
+    <div id="detail-content"><p class="empty">Select a city to see its details.</p></div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
