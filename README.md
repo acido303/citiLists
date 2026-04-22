@@ -35,6 +35,5 @@ How to get your GOOGLE_CLIENT_ID
   5. Click Create — a dialog shows your Client ID
   6. Copy it into:
     - .env → GOOGLE_CLIENT_ID=<paste here>
-    - frontend/src/app/services/auth.service.ts → const CLIENT_ID = '<paste here>'
 
   ▎ Note: You do not need a Client Secret — this app uses Google Identity Services in the browser, which only requires the Client ID.
