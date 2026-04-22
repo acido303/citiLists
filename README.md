@@ -16,6 +16,3 @@ Front End
 2. Once you select the countries it should show the list of cities.
 3. On selecting the cities it should show the details.
 4. Show the cities using pagination 5 cities per page.
- 
-
-Open AI auth
