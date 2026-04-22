@@ -25,6 +25,9 @@ public class CspFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
         response.setHeader("Content-Security-Policy", CSP);
+        response.setHeader("Referrer-Policy", "no-referrer");
+        response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+        response.setHeader("X-Content-Type-Options", "nosniff");
         chain.doFilter(request, response);
     }
 }
