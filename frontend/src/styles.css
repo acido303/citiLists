@@ -70,9 +70,7 @@ header {
 .pagination button:hover:not(:disabled) { background: #f0f2f5; }
 .pagination button:disabled { opacity: 0.35; cursor: default; }
 
-.detail {
-  padding: 32px;
-}
+.detail { padding: 32px; }
 
 .detail h2 {
   font-size: 1.6rem;
@@ -97,8 +95,6 @@ header {
   font-weight: 600;
   color: #555;
 }
-
-.hidden { display: none; }
 
 .empty {
   padding: 24px 16px;
