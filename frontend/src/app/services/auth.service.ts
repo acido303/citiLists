@@ -11,6 +11,12 @@ export interface GoogleUser {
 declare const google: any;
 const TOKEN_KEY = 'gid_token';
 
+function decodeJwtPayload(token: string): Record<string, any> {
+  const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+  const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private router = inject(Router);
@@ -20,7 +26,7 @@ export class AuthService {
     const token = this._token();
     if (!token) return null;
     try {
-      const p = JSON.parse(atob(token.split('.')[1]));
+      const p = decodeJwtPayload(token);
       return { name: p.name, email: p.email, picture: p.picture };
     } catch {
       return null;
@@ -31,7 +37,7 @@ export class AuthService {
     const token = this._token();
     if (!token) return false;
     try {
-      const p = JSON.parse(atob(token.split('.')[1]));
+      const p = decodeJwtPayload(token);
       return p.exp * 1000 > Date.now();
     } catch {
       return false;
