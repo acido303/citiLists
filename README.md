@@ -31,7 +31,7 @@ How to get your GOOGLE_CLIENT_ID
     - Application type: Web application
     - Under Authorized JavaScript origins add:
         - http://localhost:4200
-      - Your ngrok URL (e.g. https://clodlike-candance-cingulated.ngrok-free.dev)
+      - Your ngrok URL (e.g. https://[your_subdomain].ngrok-free.dev)
   5. Click Create — a dialog shows your Client ID
   6. Copy it into:
     - .env → GOOGLE_CLIENT_ID=<paste here>
