@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   template: `
     <div class="login-page">
       <div class="login-card">
-        <h1>CitiLists</h1>
+        <h1>CityLists</h1>
         <p>Sign in to explore cities around the world</p>
         <div #googleBtn></div>
       </div>
