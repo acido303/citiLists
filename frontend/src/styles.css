@@ -8,7 +8,36 @@ header {
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+.user-info .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.user-info button {
+  padding: 4px 12px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.user-info button:hover { background: rgba(255,255,255,0.1); }
 
 .layout {
   display: flex;
